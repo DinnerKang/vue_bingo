@@ -52,8 +52,10 @@ export default {
             document.getElementsByClassName("bingo")[number-1].style.backgroundColor = "yellow";
         },
         checkVertical: function(){
-            this.verticalBingo++;
+        },
+        checkHorizontal: function(){
         }
+
     },
 }
 </script>
