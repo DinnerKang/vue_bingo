@@ -46,19 +46,41 @@ export default {
                     temp = [];
                 }
             }
+            console.log(this.bingo);
         },
 
         clickBingo: function(number, idx){
             document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
+            this.checkHorizontal(number);
         },
         checkVertical: function(number){
 
         },
         checkHorizontal: function(number){
+            let i=0;
+            this.horizontalBingo = 0;
 
+            while(true){
+                
+                if(this.bingo[i].indexOf(number) > -1){
+                    this.bingo[i][this.bingo[i].indexOf(number)] = true;
+                    break;
+                }else{
+                    i++
+                }
+                if(i === 5){ break; }
+            }
+
+            for(i=0; i<5; i++){
+                if(this.bingo[i].every(function(x){ return x === true})){
+                        this.horizontalBingo++;
+                    }
+            }
+
+            console.log(this.horizontalBingo);
         },
         checkDiagonal : function(number){
-            
+
         }
 
     },
