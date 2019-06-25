@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="bingo_container">
-            <div class="bingo" v-for="list in this.bingoBoard" v-bind:key="list" v-on:click="clickBingo(list)">
-                {{list}}
+            <div class="bingo" v-for="(number, idx) in bingoBoard" v-bind:key="idx" v-on:click="clickBingo(number, idx)">
+                {{number}}
             </div>
         </div>
     </div>
@@ -24,12 +24,13 @@ export default {
         this.shackBingo();
     },
     methods: {
+        // 빙고판 섞기
         shackBingo: function(){
             
-            var arr = new Array(25);
-            var temp = [];
+            const arr = new Array(25);
+            let temp = [];
 
-            for(var i=1;i<=25;i++){
+            for(let i=0;i<25;i++){
                 arr[i] = i;
             }
 
@@ -45,15 +46,19 @@ export default {
                     temp = [];
                 }
             }
-            console.log(this.bingo);
         },
 
-        clickBingo: function(number){
-            document.getElementsByClassName("bingo")[number-1].style.backgroundColor = "yellow";
+        clickBingo: function(number, idx){
+            document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
         },
-        checkVertical: function(){
+        checkVertical: function(number){
+
         },
-        checkHorizontal: function(){
+        checkHorizontal: function(number){
+
+        },
+        checkDiagonal : function(number){
+            
         }
 
     },
