@@ -46,21 +46,16 @@ export default {
                     temp = [];
                 }
             }
-            console.log(this.bingo);
         },
 
         clickBingo: function(number, idx){
-            document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
-            this.checkHorizontal(number);
-            this.checkVertical(number);
-        },
-        checkVertical: function(number){
             let i = 0;
-            this.verticalBingo = 0;
+
+            document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
 
             while(true){
                 if(this.bingo[i].indexOf(number) > -1){
-                    this.bingo[this.bingo[i].indexOf(number)][i] = true;
+                    this.bingo[i][this.bingo[i].indexOf(number)] = true;
                     break;
                 }else{
                     i++
@@ -68,7 +63,17 @@ export default {
                 if(i === 5){ break; }
             }
 
-           for(i =0; i<5; i++){
+            this.checkHorizontal();
+            this.checkVertical();
+            this.checkDiagonal();
+            
+            console.log(this.bingo);
+        },
+
+        checkVertical: function(){
+            this.verticalBingo = 0;
+
+           for(let i=0; i<5; i++){
                for(let j=0; j<5; j++){
                   if(this.bingo[j][i] === true){
                     if(j === 4){
@@ -79,33 +84,35 @@ export default {
                   }
                }
            }
-            console.log(this.verticalBingo);
         },
-        checkHorizontal: function(number){
-            let i=0;
+        checkHorizontal: function(){
             this.horizontalBingo = 0;
-
-            while(true){
-                
-                if(this.bingo[i].indexOf(number) > -1){
-                    this.bingo[i][this.bingo[i].indexOf(number)] = true;
-                    break;
-                }else{
-                    i++
-                }
-                if(i === 5){ break; }
-            }
-
-            for(i=0; i<5; i++){
+            
+            for(let i=0; i<5; i++){
                 if(this.bingo[i].every(function(x){ return x === true})){
                         this.horizontalBingo++;
                     }
             }
         },
-        checkDiagonal : function(number){
+        checkDiagonal : function(){
+            let check = true;
+            this.diagonalBingo = 0;
 
+            for(let i=0; i<5; i++){
+               if(this.bingo[i][i] !== true){
+                   check = false;
+               }
+            }
+            if(check === true){this.diagonalBingo++;}
+
+            check = true;
+            for(let i=0; i<5; i++){
+                 if(this.bingo[i][4-i] !== true){
+                   check = false;
+               }
+            }
+            if(check === true){this.diagonalBingo++;}
         }
-
     },
 }
 </script>
