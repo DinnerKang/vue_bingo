@@ -52,9 +52,34 @@ export default {
         clickBingo: function(number, idx){
             document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
             this.checkHorizontal(number);
+            this.checkVertical(number);
         },
         checkVertical: function(number){
+            let i = 0;
+            this.verticalBingo = 0;
 
+            while(true){
+                if(this.bingo[i].indexOf(number) > -1){
+                    this.bingo[this.bingo[i].indexOf(number)][i] = true;
+                    break;
+                }else{
+                    i++
+                }
+                if(i === 5){ break; }
+            }
+
+           for(i =0; i<5; i++){
+               for(let j=0; j<5; j++){
+                  if(this.bingo[j][i] === true){
+                    if(j === 4){
+                      this.verticalBingo++;
+                  }
+                  }else{
+                      break;
+                  }
+               }
+           }
+            console.log(this.verticalBingo);
         },
         checkHorizontal: function(number){
             let i=0;
@@ -76,8 +101,6 @@ export default {
                         this.horizontalBingo++;
                     }
             }
-
-            console.log(this.horizontalBingo);
         },
         checkDiagonal : function(number){
 
