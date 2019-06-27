@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <div class="bingo_container">
-            <div class="bingo" v-for="(number, idx) in bingoBoard" v-bind:key="idx" v-on:click="clickBingo(number, idx)">
-                {{number}}
-            </div>
+    <div class="bingo_container">
+        <div class="bingo" v-for="(number, idx) in bingoBoard" :ref="'bingo_'+idx" v-bind:key="idx" v-on:click="clickBingo(number, idx)">
+            {{number}}
         </div>
     </div>
 </template>
@@ -33,6 +31,9 @@ export default {
         },
         diagonalBingo(val){
             this.totalBingo = this.totalBingo + 1;
+        },
+        totalBingo(val){
+            console.log('총 빙고 수:', val);
         }
     },
     methods: {
@@ -43,7 +44,7 @@ export default {
             let temp = [];
 
             for(let i=0;i<25;i++){
-                arr[i] = i;
+                arr[i] = i+1;
             }
 
             arr.sort(function(){return 0.5-Math.random()});
@@ -62,8 +63,7 @@ export default {
 
         clickBingo: function(number, idx){
             let i = 0;
-
-            document.getElementsByClassName("bingo")[idx].style.backgroundColor = "yellow";
+            this.$refs['bingo_'+idx][0].style.backgroundColor = "yellow";
 
             while(true){
                 if(this.bingo[i].indexOf(number) > -1){
@@ -79,7 +79,6 @@ export default {
             this.checkVertical();
             this.checkDiagonal();
             
-            console.log(this.bingo);
         },
 
         checkVertical: function(){
@@ -145,7 +144,6 @@ export default {
         font-size: 40px;
         cursor: pointer;
     }
-
     .active_bingo{
         background-color: yellow;
     }

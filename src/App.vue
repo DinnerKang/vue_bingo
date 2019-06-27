@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <Bingo></Bingo>
+    <article class="main_container">
+      <Bingo></Bingo>
+    </article>
+    <article class="main_container">
+      <Bingo></Bingo>
+    </article>
+    
   </div>
 </template>
 
@@ -15,3 +21,9 @@ export default {
 }
 </script>
 
+<style scoped>
+  .main_container{
+    width: 50%;
+    float: left;
+  }
+</style>
