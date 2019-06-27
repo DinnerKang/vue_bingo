@@ -17,11 +17,23 @@ export default {
             bingo: [],
             verticalBingo : 0,
             horizontalBingo : 0,
-            diagonalBingo: 0
+            diagonalBingo: 0,
+            totalBingo: 0
         }
     },
     created(){
         this.shackBingo();
+    },
+    watch:{
+        verticalBingo(val){
+            this.totalBingo = this.totalBingo + 1;
+        },
+        horizontalBingo(val){
+            this.totalBingo = this.totalBingo + 1;
+        },
+        diagonalBingo(val){
+            this.totalBingo = this.totalBingo + 1;
+        }
     },
     methods: {
         // 빙고판 섞기
