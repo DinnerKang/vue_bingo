@@ -1,6 +1,6 @@
 <template>
     <div class="bingo_container">
-        <div class="bingo" v-for="(number, idx) in bingoBoard" :ref="'bingo_'+idx" v-bind:key="idx" v-on:click="clickBingo(number, idx)">
+        <div class="bingo" v-for="(number, idx) in bingoBoard" :ref="'bingo_'+number" v-bind:key="idx" v-on:click="clickBingo(number)">
             {{number}}
         </div>
     </div>
@@ -16,7 +16,7 @@ export default {
             verticalBingo : 0,
             horizontalBingo : 0,
             diagonalBingo: 0,
-            totalBingo: 0
+            totalBingo: 0,
         }
     },
     created(){
@@ -24,6 +24,11 @@ export default {
     },
     props : {
         user : String
+    },
+    computed : {
+        getBingo : function(){
+            return this.$store.getters.getBingo;
+        }
     },
     watch:{
         verticalBingo(){
@@ -36,7 +41,10 @@ export default {
             this.totalBingo = this.totalBingo + 1;
         },
         totalBingo(val){
-            console.log('총 빙고 수:', val);
+            console.log(`${this.user} 총 빙고 수:`, val);
+        },
+        getBingo(val){
+            this.passedBingo(val);
         }
     },
     methods: {
@@ -63,16 +71,9 @@ export default {
                 }
             }
         },
-
-        clickBingo: function(number, idx){
-            
-            const check = this.checkTurn();
-            if(check === false){
-                return alert('차례가 아닙니다.');
-            }
-
+        checkBingo: function (number){
             let i = 0;
-            this.$refs['bingo_'+idx][0].style.backgroundColor = "yellow";
+            this.$refs['bingo_'+number][0].style.backgroundColor = "yellow";
 
             while(true){
                 if(this.bingo[i].indexOf(number) > -1){
@@ -83,12 +84,29 @@ export default {
                 }
                 if(i === 5){ break; }
             }
+        },
+
+        clickBingo: function(number){
+
+            const check = this.checkTurn();
+            if(check === false){
+                return alert('차례가 아닙니다.');
+            }
+
+            this.checkBingo(number);
+
+            this.$store.commit("checkBingo", number);
+            this.checkHorizontal();
+            this.checkVertical();
+            this.checkDiagonal();
+        },
+
+        passedBingo : function(val){
+            this.checkBingo(val);
 
             this.checkHorizontal();
             this.checkVertical();
             this.checkDiagonal();
-            
-            
         },
 
         checkVertical: function(){
@@ -139,7 +157,7 @@ export default {
             if(this.$store.state.turn % 2 !== user -1 ){
                 return false;
             }else{
-                this.$store.state.turn++;
+                this.$store.commit("changeTurn");
                 return true;
             }
         }
