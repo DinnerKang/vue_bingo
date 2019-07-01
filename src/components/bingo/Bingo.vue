@@ -22,14 +22,17 @@ export default {
     created(){
         this.shackBingo();
     },
+    props : {
+        user : String
+    },
     watch:{
-        verticalBingo(val){
+        verticalBingo(){
             this.totalBingo = this.totalBingo + 1;
         },
-        horizontalBingo(val){
+        horizontalBingo(){
             this.totalBingo = this.totalBingo + 1;
         },
-        diagonalBingo(val){
+        diagonalBingo(){
             this.totalBingo = this.totalBingo + 1;
         },
         totalBingo(val){
@@ -62,6 +65,12 @@ export default {
         },
 
         clickBingo: function(number, idx){
+            
+            const check = this.checkTurn();
+            if(check === false){
+                return alert('차례가 아닙니다.');
+            }
+
             let i = 0;
             this.$refs['bingo_'+idx][0].style.backgroundColor = "yellow";
 
@@ -78,6 +87,7 @@ export default {
             this.checkHorizontal();
             this.checkVertical();
             this.checkDiagonal();
+            
             
         },
 
@@ -123,6 +133,15 @@ export default {
                }
             }
             if(check === true){this.diagonalBingo++;}
+        },
+        checkTurn : function(){
+            const user = Number(this.user.split("_")[1]);
+            if(this.$store.state.turn % 2 !== user -1 ){
+                return false;
+            }else{
+                this.$store.state.turn++;
+                return true;
+            }
         }
     },
 }
