@@ -40,11 +40,13 @@ export default {
         diagonalBingo(){
             this.totalBingo = this.totalBingo + 1;
         },
-        totalBingo(val){
-            console.log(`${this.user} 총 빙고 수:`, val);
-        },
         getBingo(val){
             this.passedBingo(val);
+        },
+        totalBingo(){
+            if(this.totalBingo >=1){
+                alert('승');
+            }
         }
     },
     methods: {
@@ -88,7 +90,7 @@ export default {
 
         clickBingo: function(number){
 
-            const check = this.checkTurn();
+            const check = this.checkTurn(number);
             if(check === false){
                 return alert('차례가 아닙니다.');
             }
@@ -152,7 +154,11 @@ export default {
             }
             if(check === true){this.diagonalBingo++;}
         },
-        checkTurn : function(){
+        checkTurn : function(number){
+            if(this.$refs['bingo_'+number][0].style.backgroundColor === "yellow"){
+                return false;
+            }
+
             const user = Number(this.user.split("_")[1]);
             if(this.$store.state.turn % 2 !== user -1 ){
                 return false;
@@ -160,7 +166,7 @@ export default {
                 this.$store.commit("changeTurn");
                 return true;
             }
-        }
+        },
     },
 }
 </script>
