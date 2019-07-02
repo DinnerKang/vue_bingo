@@ -6,7 +6,7 @@
     <article class="main_container">
       <Bingo user="user_2"></Bingo>
     </article>
-    
+    {{winner}}
   </div>
 </template>
 
@@ -17,6 +17,11 @@ export default {
   name: 'app',
   components: {
     Bingo
+  },
+  computed:{
+    winner : function(){
+      return this.$store.state.winner;
+    }
   }
 }
 </script>

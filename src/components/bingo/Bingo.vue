@@ -42,11 +42,6 @@ export default {
         },
         getBingo(val){
             this.passedBingo(val);
-        },
-        totalBingo(){
-            if(this.totalBingo >=1){
-                alert('승');
-            }
         }
     },
     methods: {
@@ -86,8 +81,14 @@ export default {
                 }
                 if(i === 5){ break; }
             }
-        },
+            this.checkHorizontal();
+            this.checkVertical();
+            this.checkDiagonal();
 
+            if(this.totalBingo >=1){
+                this.$store.commit('gameWinner', this.user);
+            }
+        },
         clickBingo: function(number){
 
             const check = this.checkTurn(number);
@@ -95,20 +96,12 @@ export default {
                 return alert('차례가 아닙니다.');
             }
 
-            this.checkBingo(number);
-
             this.$store.commit("checkBingo", number);
-            this.checkHorizontal();
-            this.checkVertical();
-            this.checkDiagonal();
+            this.checkBingo(number);
         },
 
         passedBingo : function(val){
             this.checkBingo(val);
-
-            this.checkHorizontal();
-            this.checkVertical();
-            this.checkDiagonal();
         },
 
         checkVertical: function(){
