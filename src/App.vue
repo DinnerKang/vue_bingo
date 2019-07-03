@@ -6,7 +6,9 @@
     <article class="main_container">
       <Bingo user="user_2"></Bingo>
     </article>
-    {{winner}}
+    <article v-if="winner">
+      승자 : {{winner}}
+    </article>
   </div>
 </template>
 
