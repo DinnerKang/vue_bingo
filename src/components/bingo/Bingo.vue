@@ -47,7 +47,6 @@ export default {
     methods: {
         // 빙고판 섞기
         shackBingo: function(){
-            
             const arr = new Array(25);
             let temp = [];
 
@@ -160,6 +159,14 @@ export default {
                 return true;
             }
         },
+        resetBoard :  function(){
+            this.bingoBoard = [];
+        },
+        resetGame : async function(){
+            await this.resetBoard();
+            await this.shackBingo();
+            await this.$store.commit("resetTurn");
+        }
     },
 }
 </script>

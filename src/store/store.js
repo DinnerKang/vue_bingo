@@ -18,6 +18,9 @@ export const store = new Vuex.Store({
         changeTurn : function(state){
             return state.turn++;
         },
+        resetTurn : function(state){
+            return state.turn = 0;
+        },
         checkBingo : function(state, payload){
             return state.bingo = payload;
         },

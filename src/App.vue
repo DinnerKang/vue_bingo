@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <article class="btn_container center">
-      <input type="button" class="btn" name="resetBtn" id="resetBtn" value="게임 초기화">
+      <input type="button" class="btn" name="resetBtn" id="resetBtn" value="게임 초기화"
+        v-on:click="resetGame">
     </article>
     <article class="main_container">
-      <Bingo user="user_1"></Bingo>
+      <Bingo user="user_1" ref="user_1"></Bingo>
     </article>
     <article class="main_container">
-      <Bingo user="user_2"></Bingo>
+      <Bingo user="user_2" ref="user_2"></Bingo>
     </article>
     <article v-if="winner" class="center">
       승자 : {{winner}}
@@ -27,6 +28,12 @@ export default {
     winner : function(){
       return this.$store.state.winner;
     }
+  },
+  methods :{
+    resetGame : function(){
+      this.$refs.user_1.resetGame();
+      this.$refs.user_2.resetGame();
+    }
   }
 }
 </script>
@@ -38,6 +45,18 @@ export default {
   }
   .btn_container{
     margin: 50px 0;
+  }
+  .btn {
+    margin-top: 50px;
+    color: #fff;
+    width: 160px;
+    height: 48px;
+    border-radius: 23px;
+    box-shadow: 0 4px 8px 0 #b4d7ff;
+    background-color: #218aff;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
   }
   .center{
     text-align: center;
