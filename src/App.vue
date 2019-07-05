@@ -5,7 +5,7 @@
         v-on:click="resetGame">
     </article>
     <article class="main_container">
-      <Bingo user="user_1" ref="user_1"></Bingo>
+      <Bingo user="user_1" ref="user_1" ></Bingo>
     </article>
     <article class="main_container">
       <Bingo user="user_2" ref="user_2"></Bingo>
@@ -33,7 +33,7 @@ export default {
     resetGame : function(){
       this.$refs.user_1.resetGame();
       this.$refs.user_2.resetGame();
-    }
+    },
   }
 }
 </script>
@@ -44,10 +44,9 @@ export default {
     float: left;
   }
   .btn_container{
-    margin: 50px 0;
+    margin: 20px 0;
   }
   .btn {
-    margin-top: 50px;
     color: #fff;
     width: 160px;
     height: 48px;

@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
     state : {
         turn : 0,
         bingo : 0,
-        winner : ''
+        winner : null
     },
     getters : {
         getBingo : function(state){

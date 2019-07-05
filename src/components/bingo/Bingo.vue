@@ -17,6 +17,7 @@ export default {
             horizontalBingo : 0,
             diagonalBingo: 0,
             totalBingo: 0,
+            maxBingo : 1,
         }
     },
     created(){
@@ -42,7 +43,7 @@ export default {
         },
         getBingo(val){
             this.passedBingo(val);
-        }
+        },
     },
     methods: {
         // 빙고판 섞기
@@ -68,6 +69,7 @@ export default {
             }
         },
         checkBingo: function (number){
+            
             let i = 0;
             this.$refs['bingo_'+number][0].style.backgroundColor = "yellow";
 
@@ -84,12 +86,15 @@ export default {
             this.checkVertical();
             this.checkDiagonal();
 
-            if(this.totalBingo >=1){
+            if(this.totalBingo >= this.maxBingo){
                 this.$store.commit('gameWinner', this.user);
             }
+            
         },
         clickBingo: function(number){
-
+            if(this.$store.state.winner != null){
+                return;
+            }
             const check = this.checkTurn(number);
             if(check === false){
                 return alert('차례가 아닙니다.');
@@ -100,6 +105,7 @@ export default {
         },
 
         passedBingo : function(val){
+
             this.checkBingo(val);
         },
 
@@ -148,7 +154,7 @@ export default {
         },
         checkTurn : function(number){
             if(this.$refs['bingo_'+number][0].style.backgroundColor === "yellow"){
-                return false;
+                return true;
             }
 
             const user = Number(this.user.split("_")[1]);
